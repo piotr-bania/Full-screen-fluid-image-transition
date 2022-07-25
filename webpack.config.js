@@ -66,7 +66,7 @@ module.exports = {
 
             // Images
             {
-                test: /\.(png|pdf)$/,
+                test: /\.(png|jpg|jpeg)$/,
                 use: [{
                     loader: 'file-loader',
                     // options: {
@@ -87,14 +87,15 @@ module.exports = {
             },
 
             // Shaders
-            // {
-            //     test: /\.(glsl|vs|fs|vert|frag)$/,
-            //     exclude: /node_modules/,
-            //     use: [
-            //         'raw-loader',
-            //         'glslify-loader'
-            //     ]
-            // }
+            {
+                test: /\.(glsl|vs|fs|vert|frag)$/,
+                exclude: /node_modules/,
+                use: [
+                    'raw-loader',
+                    'glslify-loader',
+                    'webpack-glsl'
+                ]
+            }
         ]
     },
     plugins: [
