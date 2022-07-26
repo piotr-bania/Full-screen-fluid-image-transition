@@ -93,7 +93,7 @@ module.exports = {
                 use: [
                     'raw-loader',
                     'glslify-loader',
-                    'webpack-glsl'
+                    'webpack-glsl-loader'
                 ]
             }
         ]
