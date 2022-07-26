@@ -2,78 +2,36 @@ import './styles/main.scss'
 import * as THREE from 'three'
 import sushi from './assets/sushi.jpg'
 
-const canvas = document.querySelector("canvas")
-const sandbox = new GlslCanvas(canvas)
+// Scene
+const scene = new THREE.Scene()
 
-const frag = `
-cout << setprecision (1) << fixed << c;
+// Camera
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
 
-uniform float u_time;
-uniform vec2 resolution;
-uniform vec2 mouse;
-uniform vec3 spectrum;
+// Textures
+const textureLoader = new THREE.TextureLoader()
 
-uniform sampler2D image;
+// Geometry
+const geometry = new THREE.PlaneBufferGeometry(1, 1, 32, 32)
 
-in VertexData
-{
-    vec4 v_position;
-    vec3 v_normal;
-    vec2 v_texcoord;
-} inData;
+// Material
+const material = new THREE.RawShaderMaterial({
+    vertexShader: '',
+    fragmentShader: ''
+})
 
-out vec4 fragColor;
+// Mesh
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
 
-#define NUM_OCTAVES 5
+// Renderer
+const renderer = new THREE.WebGLRenderer()
+renderer.setSize(window.innerWidth, window.innerHeight)
+document.body.appendChild(renderer.domElement)
 
-float rand(vec2 n) { 
-    return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+// Animate
+function animate() {
+    requestAnimationFrame(animate)
+    renderer.render(scene, camera)
 }
-
-float noise(vec2 p){
-    vec2 ip = floor(p);
-    vec2 u = fract(p);
-    u = u*u*(3.0-2.0*u);
-    
-    float res = mix(
-        mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
-        mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
-    return res*res;
-}
-
-float fbm(vec2 x) {
-    float v = 0.0;
-    float a = 0.5;
-    vec2 shift = vec2(100);
-    // Rotate to reduce axial bias
-    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
-    for (int i = 0; i < NUM_OCTAVES; ++i) {
-        v += a * noise(x);
-        x = rot * x * 2.0 + shift;
-        a *= 0.5;
-    }
-    return v;
-}
-
-void main(void)
-{
-    vec2 uv = inData.v_texcoord;
-    uv.y = 1.0 - uv.y;
-    
-    float strenght = smoothstep(0.5, 1,  uv.y);
-    
-    vec2 surface = strenght * vec2(
-        mix(-0.3, 0.3, fbm(2.0 * uv + 0.5 * u_time)),
-        mix(-0.3, 0.3, fbm(2.0 * uv + 0.5 * u_time))
-        );
-    
-    uv += refract(vec2(0.0, 0.0), surface, 1.0 / 1.333);
-    
-    vec4 color = texture2D(image, uv);
-    
-    fragColor = color;
-}
-`
-
-sandbox.load(frag)
-sandbox.load("image", "sushi.jpg")
+animate()
