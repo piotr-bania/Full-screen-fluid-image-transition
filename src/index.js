@@ -5,6 +5,7 @@ import {
 } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
 import vertexShader from './shaders/vertex.glsl'
+import fragmentShader from './shaders/fragment.glsl'
 
 import sushi from './assets/sushi.jpg'
 
