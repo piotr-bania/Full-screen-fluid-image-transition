@@ -23,11 +23,20 @@ const textureLoader = new THREE.TextureLoader()
 
 // Geometry
 const geometry = new THREE.PlaneBufferGeometry(1, 1, 32, 32)
+const count = geometry.attributes.position.count
+const randoms = new Float32Array(count)
+
+for(let i = 0; i < count; i++) {
+    randoms[i] = Math.random()
+}
+
+geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1))
 
 // Material
 const material = new THREE.RawShaderMaterial({
     vertexShader: vertexShader,
-    fragmentShader: fragmentShader
+    fragmentShader: fragmentShader,
+    side: THREE.DoubleSide
 })
 
 // Mesh
@@ -65,7 +74,8 @@ controls.enableDamping = true
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas,
+    antialias: true
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
