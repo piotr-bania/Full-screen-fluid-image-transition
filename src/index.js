@@ -39,18 +39,10 @@ const material = new THREE.RawShaderMaterial({
     fragmentShader: fragmentShader,
     side: THREE.DoubleSide,
     uniforms: {
-        uFrequency: {
-            value: new THREE.Vector2(10, 10)
-        },
-        uTime: {
-            value: 0
-        },
-        uColor: {
-            value: new THREE.Color()
-        },
-        uTexture: {
-            value: flagTexture
-        }
+        uFrequency: { value: new THREE.Vector2(10, 10) },
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color('violet') },
+        uTexture: { value: flagTexture }
     }
 })
 
