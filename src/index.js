@@ -20,10 +20,11 @@ const scene = new THREE.Scene()
 
 // Textures
 const textureLoader = new THREE.TextureLoader()
-const flagTexture = textureLoader.load('/textures/sushi.jpg')
+const flagTexture = textureLoader.load('/textures/flag-french.jpg')
 
 // Geometry
 const geometry = new THREE.PlaneBufferGeometry(1, 1, 32, 32)
+
 const count = geometry.attributes.position.count
 const randoms = new Float32Array(count)
 
@@ -34,15 +35,23 @@ for (let i = 0; i < count; i++) {
 geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1))
 
 // Material
-const material = new THREE.RawShaderMaterial({
+const material = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     side: THREE.DoubleSide,
     uniforms: {
-        uFrequency: { value: new THREE.Vector2(10, 10) },
-        uTime: { value: 0 },
-        uColor: { value: new THREE.Color('violet') },
-        uTexture: { value: flagTexture }
+        uFrequency: {
+            value: new THREE.Vector2(10, 10)
+        },
+        uTime: {
+            value: 0
+        },
+        uColor: {
+            value: new THREE.Color('violet')
+        },
+        uTexture: {
+            value: flagTexture
+        }
     }
 })
 
