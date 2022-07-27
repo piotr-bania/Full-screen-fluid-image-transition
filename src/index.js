@@ -7,8 +7,6 @@ import * as dat from 'lil-gui'
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
 
-// import sushi from './assets/sushi.jpg'
-
 // Debug
 const gui = new dat.GUI()
 
@@ -20,7 +18,7 @@ const scene = new THREE.Scene()
 
 // Textures
 const textureLoader = new THREE.TextureLoader()
-const flagTexture = textureLoader.load('/textures/flag-french.jpg')
+const flagTexture = textureLoader.load('/textures/sushi.jpg')
 
 // Geometry
 const geometry = new THREE.PlaneBufferGeometry(1, 1, 32, 32)

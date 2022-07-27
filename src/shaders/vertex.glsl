@@ -30,5 +30,4 @@ void main() {
 
     // vRandom = aRandom;
     vUv = uv;
-    vElevation = elevation;
 }
